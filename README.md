@@ -12,7 +12,7 @@ Rapid advancements in large multimodal models (LMMs) have significantly enhanced
 
 ## Data Acquisition
 
-> ####  For PatchVQA subset:
+> ###  For PatchVQA subset:
 
 Access images can from [PathMMU](https://huggingface.co/datasets/jamessyx/PathMMU) and the questions from PatchVQA at  [PatchVQA](https://github.com/superjamessyx/PathBench/blob/main/data/PatchVQA.json).
 
@@ -37,7 +37,7 @@ Example of the PatchVQA:
 
 
 
-> ####  For WSICap subset:
+> ###  For WSICap subset:
 
 #### Step1:
 
@@ -54,6 +54,87 @@ Data example:
 ```
 
 
+
+> #### Step2:
+
+Employ the GDC Data Transfer Tool to download the whole-slide images (.svs files) referenced in the JSON file. Detailed instructions for using this tool can be found on the GDC's documentation page: https://docs.gdc.cancer.gov/Data_Transfer_Tool/Users_Guide/Getting_Started/.
+
+A simple approach is to use the `file_id` field  and download the file using `gdc-client download <file_id>`.
+
+
+
+> ### For WSIVQA subset
+
+#### Step1:
+
+Access and download the JSON file containing WSI IDs, file IDs, and processed reports from the [**WSICap**](https://github.com/superjamessyx/PathBench/blob/main/data/WSIVQA.json). 
+
+Data example:
+
+```json
+{
+    "wsi_id": "TCGA-BQ-5892-01Z-00-DX1.f3a4da33-2b60-4b8e-b623-7b6237106a4c",
+    "file_id": "0f54bf67-2014-49f3-b14e-e7783e01d900",
+    "QAs": [
+        {
+            "question": "Which staining result is observed in the high-grade unclassified renal cell carcinoma?",
+            "options": [
+                "Positive for CD10 and CA-IX",
+                "Negative for CD10 and CA-IX",
+                "Positive for CD20 and CA-IX",
+                "Negative for CD20 and CA-IX"
+            ],
+            "answer_index": "0"
+        },
+        {
+            "question": "What features are present in the renal cell carcinoma?",
+            "options": [
+                "Papillary and solid features only",
+                "Clear cell and papillary features only",
+                "Solid, papillary, and clear cell features",
+                "Solid and clear cell features only"
+            ],
+            "answer_index": "2"
+        },
+        {
+            "question": "What is the condition of the renal vein in this case?",
+            "options": [
+                "No invasion",
+                "Invasion present"
+            ],
+            "answer_index": "0"
+        }
+    ],
+    "MIZero_CLIP_prompts": [
+        {
+            "prompts": [
+                "Prompt A: The staining result observed in the high-grade unclassified renal cell carcinoma is positive for CD10 and CA-IX.",
+                "Prompt B: The staining result observed in the high-grade unclassified renal cell carcinoma is negative for CD10 and CA-IX.",
+                "Prompt C: The staining result observed in the high-grade unclassified renal cell carcinoma is positive for CD20 and CA-IX.",
+                "Prompt D: The staining result observed in the high-grade unclassified renal cell carcinoma is negative for CD20 and CA-IX."
+            ],
+            "answer_index": "0"
+        },
+        {
+            "prompts": [
+                "Prompt A: The renal cell carcinoma shows papillary and solid features only.",
+                "Prompt B: The renal cell carcinoma shows clear cell and papillary features only.",
+                "Prompt C: The renal cell carcinoma shows solid, papillary, and clear cell features."
+            ],
+            "answer_index": "2"
+        },
+        {
+            "prompts": [
+                "Prompt A: The renal vein shows no invasion.",
+                "Prompt B: The renal vein shows invasion."
+            ],
+            "answer_index": "0"
+        }
+    ]
+}
+```
+
+where `answer_index` represents the index of the correct option within the `options` array, and `MIZero_CLIP_prompts` contains the question prompts that we have converted into a format suitable for MI-Zero to compute image similarity using CLIP.
 
 > #### Step2:
 
