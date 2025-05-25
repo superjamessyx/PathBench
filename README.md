@@ -12,7 +12,51 @@ Rapid advancements in large multimodal models (LMMs) have significantly enhanced
 
 ## Data Acquisition
 
-**For PatchVQA subset:**
+> ####  For PatchVQA subset:
 
-All paired images can be accessed directly from [PathMMU](https://huggingface.co/datasets/jamessyx/PathMMU). The paired PatchVQA questions can be downloaded at [data](https://github.com/superjamessyx/PathBench/blob/main/data/PatchVQA.json).
+Access images can from [PathMMU](https://huggingface.co/datasets/jamessyx/PathMMU) and the questions from PatchVQA at  [PatchVQA](https://github.com/superjamessyx/PathBench/blob/main/data/PatchVQA.json).
 
+Example of the PatchVQA:
+
+```json
+ {
+    "No": "1",
+    "img": "3a147c020474daa571a9b2df8405b9d33ce16913dab323d05431585ce073ce50.png",
+    "question": "What is the most likely morphological classification of the bacteria present in the micrograph?",
+    "options": [
+        "A) Spirochetes",
+        "B) Bacilli",
+        "C) Vibrio",
+        "D) Filamentous bacteria",
+        "E) Cocci",
+        "F) Coccobacilli"
+    ],
+    "answer": "F) Coccobacilli"
+}
+```
+
+
+
+> ####  For WSICap subset:
+
+#### Step1:
+
+Access and download the JSON file containing WSI IDs, file IDs, and processed reports from the [**WSICap**](https://github.com/superjamessyx/PathBench/blob/main/data/WSICap.json). 
+
+Data example:
+
+```json
+{
+    "wsi_id": "TCGA-A3-A8OV-01Z-00-DX1.ABA46896-E96D-4208-B0E3-4712F04175D4",
+    "file_id": "d343ae83-8a87-4d10-8db6-d022087bf03f",
+    "report": "The examination of the renal tissue reveals a primary diagnosis of **clear cell renal cell carcinoma (CCRCC), Fuhrman nuclear grade 2**. The tumor is confined to the kidney but extends focally to the renal parenchymal margin, indicating a positive margin status (R1). Lymphovascular invasion, sarcomatoid features, and tumor necrosis are not identified. \n\nFurther detailed histopathological analysis shows preserved renal architecture with some tubules exhibiting cellular stress markers such as eosinophilic cytoplasm, prominent nuclei, and occasional vacuolated cytoplasm. Chronic interstitial fibrosis and tubular atrophy are noted, consistent with chronic kidney disease. Tubular changes, including nuclear pleomorphism and hyperchromatic nuclei, suggest potential early neoplastic changes.\n\nInterstitial inflammation and fibrosis point towards chronic pyelonephritis or interstitial nephritis. Glomerular pathology includes hypercellularity, capillary loop thickening, and mesangial expansion, indicative of proliferative glomerulonephritis or focal segmental glomerulosclerosis. Vascular changes like arteriosclerosis and vascular calcifications suggest underlying hypertension or cardiovascular issues.\n\nNeoplastic processes other than CCRCC, including oncocytomas and potential renal spindle cell neoplasms, are indicated by cellular pleomorphism and disorganized architecture. The combined observations highlight significant chronic kidney disease, tubular injury, and neoplastic processes."
+}
+```
+
+
+
+> #### Step2:
+
+Employ the GDC Data Transfer Tool to download the whole-slide images (.svs files) referenced in the JSON file. Detailed instructions for using this tool can be found on the GDC's documentation page: https://docs.gdc.cancer.gov/Data_Transfer_Tool/Users_Guide/Getting_Started/.
+
+A simple approach is to use the `file_id` field  and download the file using `gdc-client download <file_id>`.
